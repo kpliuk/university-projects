@@ -1,0 +1,49 @@
+<h1>Save name to DB</h1>
+
+<input id="name" placeholder="Enter name">
+<button onclick="sendAndLoad()">Save & Show</button>
+
+<ul id="list"></ul>
+
+<script>
+async function loadUsers() {
+  try {
+    const res = await fetch("http://localhost:5000/users");
+    const data = await res.json();
+
+    const list = document.getElementById("list");
+    list.innerHTML = "";
+
+    data.forEach(u => {
+      const li = document.createElement("li");
+      li.innerText = u.name;
+      list.appendChild(li);
+    });
+
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+async function sendAndLoad() {
+  const name = document.getElementById("name").value;
+
+  try {
+    await fetch("http://localhost:5000/save", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ name })
+    });
+
+    await loadUsers();
+
+  } catch (err) {
+    console.error(err);
+    alert("Error");
+  }
+}
+
+window.onload = loadUsers;
+</script>

@@ -1,0 +1,6 @@
+.skuska.env
+backup-*.sql
+backup-*.json
+secret.yaml
+.backend-containerapp.yaml
+.skuska-containerapp.yaml
